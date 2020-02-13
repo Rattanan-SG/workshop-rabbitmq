@@ -1,0 +1,32 @@
+version: "2"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  consumer:
+    build: ./Consumer
+    command: ["npm", "run", "dev"]
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3000:3000
+    links:
+      - rabbitmq
+    volumes:
+      - ./Consumer:/app/
+      - /app/node_modules
+  producer:
+    build: ./Producer
+    command: ["npm", "run", "dev"]
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3001:3001
+    links:
+      - rabbitmq
+    volumes:
+      - ./Producer:/app/
+      - /app/node_modules
