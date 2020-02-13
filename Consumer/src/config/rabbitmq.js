@@ -13,13 +13,16 @@ const connect = async () => {
       }
     });
     connection.on("close", () => {
-      logError("[AMQP] Connection close start reconnecting");
-      return setTimeout(connect, 1000);
+      logError("[AMQP] Connection close. Try reconnecting");
+      return setTimeout(connect, 5000);
     });
     logInfo("[AMQP] Connected");
   } catch (error) {
-    logError("[AMQP] Cannot create connection", error.message);
-    return setTimeout(connect, 1000);
+    logError(
+      "[AMQP] Cannot create connection. Try reconnecting",
+      error.message
+    );
+    return setTimeout(connect, 5000);
   }
 };
 
@@ -38,7 +41,7 @@ const createChannel = async () => {
       });
       logInfo("[AMQP] Create channel success");
     } catch (error) {
-      logError("[AMQP] Cannot create channel", error.message);
+      logError("[AMQP] Cannot create channel. Try again", error.message);
     }
   }
   return channel;

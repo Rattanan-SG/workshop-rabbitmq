@@ -1,4 +1,4 @@
-const SampleSubscribe = require("./sample");
+const SampleSubscribe = require("./sample")();
 
 module.exports = {
   SampleSubscribe
