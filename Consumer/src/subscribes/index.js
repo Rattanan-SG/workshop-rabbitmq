@@ -1,5 +1,5 @@
-const SampleSubscribe = require("./sample")();
+const SimpleSubscribe = require("./simple")();
 
 module.exports = {
-  SampleSubscribe
+  SimpleSubscribe
 };

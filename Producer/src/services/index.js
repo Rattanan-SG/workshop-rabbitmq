@@ -1,4 +1,4 @@
-const { sendMessageToQueue } = require("../publish/sample");
+const { sendMessageToQueue } = require("../publish/directExchange");
 
 module.exports = {
   hello: async () => {
