@@ -2,8 +2,8 @@ const asyncWrapper = require("../middleware/async-wrapper");
 const service = require("../services");
 
 module.exports = {
-  hello: asyncWrapper(async (req, res) => {
-    const result = await service.hello();
+  sendMessageDirect: asyncWrapper(async (req, res) => {
+    const result = await service.sendMessageDirect(req.body);
     res.send(result);
   })
 };

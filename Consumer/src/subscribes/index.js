@@ -1,5 +1,5 @@
-const SimpleSubscribe = require("./simple")();
+const directSubscribe = require("./direct")();
 
 module.exports = {
-  SimpleSubscribe
+  directSubscribe
 };
