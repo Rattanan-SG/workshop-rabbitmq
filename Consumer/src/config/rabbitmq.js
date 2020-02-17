@@ -2,7 +2,6 @@ const amqplib = require("amqplib");
 const { logInfo, logError } = require("../utils/logger");
 
 let connection = null;
-let channel = null;
 
 const connect = async () => {
   try {
@@ -27,27 +26,24 @@ const connect = async () => {
 };
 
 const createChannel = async () => {
-  if (!connection) {
-    await connect();
-  }
-  if (!channel) {
-    try {
-      channel = await connection.createChannel();
-      channel.on("error", error => {
-        logError("[AMQP] Channel error", error.message);
-      });
-      channel.on("close", () => {
-        logInfo("[AMQP] Channel closed");
-      });
-      logInfo("[AMQP] Create channel success");
-    } catch (error) {
-      logError("[AMQP] Cannot create channel. Try again", error.message);
-    }
+  let channel = null;
+  try {
+    channel = await connection.createChannel();
+    channel.on("error", error => {
+      logError("[AMQP] Channel error", error.message);
+    });
+    channel.on("close", () => {
+      logInfo("[AMQP] Channel closed");
+    });
+    logInfo("[AMQP] Create channel success");
+  } catch (error) {
+    logError("[AMQP] Cannot create channel", error.message);
   }
   return channel;
 };
 
 connect();
+process.once("SIGINT", connection.close.bind(connection));
 
 module.exports = {
   createChannel

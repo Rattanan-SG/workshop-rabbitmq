@@ -1,5 +1,7 @@
-const directSubscribe = require("./direct")();
+const directExchange = require("./directExchange")();
+// const workQueue = require("./workQueue")();
 
 module.exports = {
-  directSubscribe
+  directExchange
+  // workQueue
 };

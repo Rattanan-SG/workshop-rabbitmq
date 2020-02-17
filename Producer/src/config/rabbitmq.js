@@ -27,9 +27,6 @@ const connect = async () => {
 };
 
 const createChannel = async () => {
-  if (!connection) {
-    await connect();
-  }
   if (!channel) {
     try {
       channel = await connection.createChannel();
@@ -48,6 +45,10 @@ const createChannel = async () => {
 };
 
 connect();
+process.on("SIGINT", () => {
+  connection.close();
+  process.exit();
+});
 
 module.exports = {
   createChannel

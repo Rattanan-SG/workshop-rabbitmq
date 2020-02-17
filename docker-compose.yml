@@ -6,13 +6,16 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    volumes:
+      - /var/lib/rabbitmq
   consumer:
     build: ./Consumer
+    image: sanguo/test-consumer
     command: ["npm", "run", "dev"]
     environment:
       NODE_ENV: development
     ports:
-      - 3000:3000
+      - "3000-3002:3000"
     links:
       - rabbitmq
     volumes:
@@ -20,11 +23,12 @@ services:
       - /app/node_modules
   producer:
     build: ./Producer
+    image: sanguo/test-producer
     command: ["npm", "run", "dev"]
     environment:
       NODE_ENV: development
     ports:
-      - 3001:3001
+      - 4000:4000
     links:
       - rabbitmq
     volumes:

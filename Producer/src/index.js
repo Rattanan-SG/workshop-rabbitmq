@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(route);
 app.use(errorMiddleware);
 
-const PORT = process.env.NODE_PORT || 3001;
+const PORT = process.env.NODE_PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}...`);
 });
