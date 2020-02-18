@@ -3,7 +3,9 @@ const controller = require("../controllers");
 
 const router = express.Router();
 
-router.post("/sendMessageDirect", controller.sendMessageDirect);
+router.post("/sendMessageSimple", controller.sendMessageSimple);
 router.post("/sendMessageWorkQueue", controller.sendMessageWorkQueue);
+router.post("/sendMessageFanout", controller.sendMessageFanout);
+router.post("/sendMessageRouting", controller.sendMessageRouting);
 
 module.exports = router;

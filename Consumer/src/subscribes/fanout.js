@@ -2,24 +2,27 @@ const { getChannel } = require("../config/rabbitmq");
 const { logInfo, logError } = require("../utils/logger");
 
 let channel;
-const queue = "WorkQueue";
-const queueOption = { durable: true };
+const exchange = "logs.fanout";
+const type = "fanout";
+const exchangeOption = { durable: false };
+const queueOption = { exclusive: true };
 
-const startSubscribe = () => {
+const startSubscribe = async () => {
   try {
     channel = getChannel();
-    channel.assertQueue(queue, queueOption);
+    const { queue } = await channel.assertQueue("", queueOption);
+    channel.assertExchange(exchange, type, exchangeOption);
+    channel.bindQueue(queue, exchange, "");
     channel.prefetch(2);
     channel.consume(
       queue,
       msg => {
         const content = JSON.parse(msg.content.toString());
         setTimeout(() => {
-          console.log(`[${content}] Done`);
-          channel.ack(msg);
+          console.log(`[${content}] Fanout Done`);
         }, 5000);
       },
-      { noAck: false }
+      { noAck: true }
     );
     logInfo(`[AMQP] Start subscribe to ${queue} queue`);
   } catch (error) {

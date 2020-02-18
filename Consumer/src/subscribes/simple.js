@@ -2,13 +2,13 @@ const { getChannel } = require("../config/rabbitmq");
 const { logInfo, logError } = require("../utils/logger");
 
 let channel;
-const queue = "direct";
-const option = { durable: false };
+const queue = "simple";
+const queueOption = { durable: false };
 
 const startSubscribe = () => {
   try {
     channel = getChannel();
-    channel.assertQueue(queue, option);
+    channel.assertQueue(queue, queueOption);
     channel.consume(
       queue,
       msg => {
