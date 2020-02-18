@@ -1,7 +1,9 @@
 const amqplib = require("amqplib");
+const CustomError = require("../utils/custom-error");
 const { logInfo, logError } = require("../utils/logger");
 
-let connection = null;
+let connection;
+let channel;
 
 const connect = async () => {
   try {
@@ -16,6 +18,7 @@ const connect = async () => {
       return setTimeout(connect, 5000);
     });
     logInfo("[AMQP] Connected");
+    await createChannel();
   } catch (error) {
     logError(
       "[AMQP] Cannot create connection. Try reconnecting",
@@ -26,25 +29,43 @@ const connect = async () => {
 };
 
 const createChannel = async () => {
-  let channel = null;
-  try {
-    channel = await connection.createChannel();
-    channel.on("error", error => {
-      logError("[AMQP] Channel error", error.message);
-    });
-    channel.on("close", () => {
-      logInfo("[AMQP] Channel closed");
-    });
-    logInfo("[AMQP] Create channel success");
-  } catch (error) {
-    logError("[AMQP] Cannot create channel", error.message);
+  if (typeof channel === "undefined") {
+    try {
+      channel = await connection.createChannel();
+      channel.on("error", error => {
+        logError("[AMQP] Channel error", error.message);
+      });
+      channel.on("close", () => {
+        logInfo("[AMQP] Channel closed");
+      });
+      logInfo("[AMQP] Create channel success");
+    } catch (error) {
+      logError("[AMQP] Cannot create channel", error.message);
+      return setTimeout(createChannel, 5000);
+    }
+  }
+};
+
+const getConnection = () => {
+  if (typeof channel === "undefined") {
+    throw new CustomError("AMQP_CONNECTION_NOT_READY", 500, `Try again later.`);
+  }
+  return channel;
+};
+const getChannel = () => {
+  if (typeof channel === "undefined") {
+    throw new CustomError("AMQP_CHANNEL_NOT_READY", 500, `Try again later.`);
   }
   return channel;
 };
 
 connect();
-process.once("SIGINT", connection.close.bind(connection));
+process.on("SIGINT", async () => {
+  await connection.close();
+  process.exit();
+});
 
 module.exports = {
-  createChannel
+  getConnection,
+  getChannel
 };

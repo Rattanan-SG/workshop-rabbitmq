@@ -1,7 +1,2 @@
-const directExchange = require("./directExchange")();
-// const workQueue = require("./workQueue")();
-
-module.exports = {
-  directExchange
-  // workQueue
-};
+require("./directExchange")();
+require("./workQueue")();

@@ -1,13 +1,13 @@
-const { createChannel } = require("../config/rabbitmq");
+const { getChannel } = require("../config/rabbitmq");
 const { logInfo, logError } = require("../utils/logger");
 
-let channel = null;
+let channel;
 const queue = "direct";
 const option = { durable: false };
 
-module.exports = startSubscribe = async () => {
+const startSubscribe = () => {
   try {
-    channel = await createChannel();
+    channel = getChannel();
     channel.assertQueue(queue, option);
     channel.consume(
       queue,
@@ -17,10 +17,12 @@ module.exports = startSubscribe = async () => {
       },
       { noAck: true }
     );
-    logInfo("[AMQP] Start subscribe to queue" + queue, { queue });
+    logInfo(`[AMQP] Start subscribe to ${queue} queue`);
   } catch (error) {
     logError("[AMQP] Cannot start subscribe. Try again", error.message);
     return setTimeout(startSubscribe, 5000);
   }
   return channel;
 };
+
+module.exports = startSubscribe;

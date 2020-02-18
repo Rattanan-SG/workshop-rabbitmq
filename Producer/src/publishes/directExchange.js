@@ -1,8 +1,8 @@
-const { createChannel } = require("../config/rabbitmq");
+const { getChannel } = require("../config/rabbitmq");
 
 module.exports = {
-  sendMessageToQueue: async ({ queue, option, message }) => {
-    const channel = await createChannel();
+  sendMessageToQueue: ({ queue, option, message }) => {
+    const channel = getChannel();
     channel.assertQueue(queue, { durable: false, ...option });
     return channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
   }

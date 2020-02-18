@@ -1,7 +1,18 @@
+const CustomError = require("../utils/custom-error");
 const { logError } = require("../utils/logger");
 
 module.exports = async (error, req, res, next) => {
-  console.log(error);
+  const { name, status, code, message } = error;
+  if (error instanceof CustomError) {
+    logError("Error happen", {
+      request: `${req.method} ${req.originalUrl}`,
+      error
+    });
+    return res.status(status).send({
+      error: code,
+      message
+    });
+  }
   logError("Unplanned error happen", {
     request: `${req.method} ${req.originalUrl}`,
     error: error.toString()
