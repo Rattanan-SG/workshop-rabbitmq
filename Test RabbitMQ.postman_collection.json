@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "bae0d4c9-92ed-4b0c-acca-da0f74a9b200",
+		"name": "Test RabbitMQ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{url}}:3000/api/sendMessageSimple",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"queue\": \"simple\",\n\t\"message\": {\n\t\t\"test1\": \"Hello\",\n\t\t\"test2\": 10\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{url}}:4000/api/sendMessageSimple",
+					"host": [
+						"{{url}}"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"sendMessageSimple"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{url}}:3000/api/sendMessageWorkQueue",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"queue\": \"WorkQueue\",\n\t\"message\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}:4000/api/sendMessageWorkQueue",
+					"host": [
+						"{{url}}"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"sendMessageWorkQueue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{url}}:3000/api/sendMessageFanout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"exchange\": \"logs.fanout\",\n\t\"message\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}:4000/api/sendMessageFanout",
+					"host": [
+						"{{url}}"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"sendMessageFanout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{url}}:3000/api/sendMessageRouting",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"exchange\": \"logs.direct\",\n\t\"routingKey\": \"green\",\n\t\"message\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}:4000/api/sendMessageRouting",
+					"host": [
+						"{{url}}"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"sendMessageRouting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{url}}:3000/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}:3001/",
+					"host": [
+						"{{url}}"
+					],
+					"port": "3001",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
