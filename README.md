@@ -14,7 +14,7 @@
 ### Systems
 - Consumer binding port 3000-3002
 - Producer binding port 4000
-- RabbitMq binding port 5672 and Management port 15672
+- RabbitMQ binding port 5672 and Management port 15672
 
 Call Producer API (E.g. :4000/api/sendMessageSimple) to send message 
 
