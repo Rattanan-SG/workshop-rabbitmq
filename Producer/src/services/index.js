@@ -1,4 +1,11 @@
-const { simple, workQueue, fanout, routing } = require("../publishes");
+const {
+  simple,
+  workQueue,
+  fanout,
+  routing,
+  topic,
+  rcpClient
+} = require("../publishes");
 
 module.exports = {
   sendMessageSimple: async ({ queue, message }) => {
@@ -23,5 +30,20 @@ module.exports = {
       message
     });
     return { exchange, routingKey, message, result };
+  },
+  sendMessageTopic: async ({ exchange, routingKey, message }) => {
+    const result = await topic.sendMessageToTopicExchange({
+      exchange,
+      routingKey,
+      message
+    });
+    return { exchange, routingKey, message, result };
+  },
+  sendMessageToRCPServer: async ({ queue, message }) => {
+    const result = await rcpClient.sendMessageToRCPServer({
+      queue,
+      message
+    });
+    return { queue, message, result };
   }
 };

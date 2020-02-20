@@ -17,5 +17,13 @@ module.exports = {
   sendMessageRouting: asyncWrapper(async (req, res) => {
     const result = await service.sendMessageRouting(req.body);
     res.send(result);
+  }),
+  sendMessageTopic: asyncWrapper(async (req, res) => {
+    const result = await service.sendMessageTopic(req.body);
+    res.send(result);
+  }),
+  sendMessageToRCPServer: asyncWrapper(async (req, res) => {
+    const result = await service.sendMessageToRCPServer(req.body);
+    res.send(result);
   })
 };
