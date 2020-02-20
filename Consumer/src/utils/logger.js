@@ -1,8 +1,8 @@
-const winston = require('winston');
+const winston = require("winston");
 
 const options = {
   console: {
-    level: 'debug'
+    level: "debug"
   }
 };
 

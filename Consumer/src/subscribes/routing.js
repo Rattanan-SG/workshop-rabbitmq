@@ -1,7 +1,6 @@
 const { getChannel } = require("../config/rabbitmq");
 const { logInfo, logError } = require("../utils/logger");
 
-let channel;
 const exchange = "logs.direct";
 const type = "direct";
 const routingKey = ["red", "green", "blue"];
@@ -9,6 +8,7 @@ const exchangeOption = { durable: false };
 const queueOption = { exclusive: true };
 
 const startSubscribe = async () => {
+  let channel;
   try {
     channel = getChannel();
     channel.assertExchange(exchange, type, exchangeOption);
@@ -29,7 +29,9 @@ const startSubscribe = async () => {
       logInfo(`[AMQP] Start subscribe to ${queue} queue`);
     });
   } catch (error) {
-    logError("[AMQP] Cannot start subscribe. Try again", error.message);
+    logError("[AMQP] Cannot start subscribe. Try again", {
+      message: error.message
+    });
     return setTimeout(startSubscribe, 5000);
   }
   return channel;

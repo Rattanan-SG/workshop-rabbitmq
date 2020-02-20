@@ -10,7 +10,7 @@ const connect = async () => {
     connection = await amqplib.connect(global.gConfig.rabbitmq_url);
     connection.on("error", error => {
       if (error.message !== "Connection closing") {
-        logError("[AMQP] Connection error", error.message);
+        logError("[AMQP] Connection error", { message: error.message });
       }
     });
     connection.on("close", () => {
@@ -20,10 +20,9 @@ const connect = async () => {
     logInfo("[AMQP] Connected");
     await createChannel();
   } catch (error) {
-    logError(
-      "[AMQP] Cannot create connection. Try reconnecting",
-      error.message
-    );
+    logError("[AMQP] Cannot create connection. Try reconnecting", {
+      message: error.message
+    });
     return setTimeout(connect, 5000);
   }
 };
@@ -33,14 +32,14 @@ const createChannel = async () => {
     try {
       channel = await connection.createChannel();
       channel.on("error", error => {
-        logError("[AMQP] Channel error", error.message);
+        logError("[AMQP] Channel error", { message: error.message });
       });
       channel.on("close", () => {
         logInfo("[AMQP] Channel closed");
       });
       logInfo("[AMQP] Create channel success");
     } catch (error) {
-      logError("[AMQP] Cannot create channel", error.message);
+      logError("[AMQP] Cannot create channel", { message: error.message });
       return setTimeout(createChannel, 5000);
     }
   }
