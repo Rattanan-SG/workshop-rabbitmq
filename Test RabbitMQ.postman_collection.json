@@ -37,6 +37,18 @@
 		},
 		{
 			"name": "{{url}}:3000/api/sendMessageWorkQueue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f91026ad-7070-4e71-ae38-8f9e50557c56",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -49,7 +61,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"queue\": \"WorkQueue\",\n\t\"message\": 1\n}"
+					"raw": "{\n    \"queue\": \"WorkQueue\",\n    \"message\": 1\n}"
 				},
 				"url": {
 					"raw": "{{url}}:4000/api/sendMessageWorkQueue",
@@ -120,6 +132,66 @@
 					"path": [
 						"api",
 						"sendMessageRouting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{url}}:3000/api/sendMessageTopic",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"exchange\": \"logs.topic\",\n\t\"routingKey\": \"sys.error\",\n\t\"message\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}:4000/api/sendMessageTopic",
+					"host": [
+						"{{url}}"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"sendMessageTopic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{url}}:3000/api/sendMessageToRCPServer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"queue\": \"rpc_queue\",\n\t\"message\": 20\n}"
+				},
+				"url": {
+					"raw": "{{url}}:4000/api/sendMessageToRCPServer",
+					"host": [
+						"{{url}}"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"sendMessageToRCPServer"
 					]
 				}
 			},
