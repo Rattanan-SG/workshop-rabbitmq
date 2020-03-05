@@ -9,5 +9,6 @@ router.post("/sendMessageFanout", controller.sendMessageFanout);
 router.post("/sendMessageRouting", controller.sendMessageRouting);
 router.post("/sendMessageTopic", controller.sendMessageTopic);
 router.post("/sendMessageToRCPServer", controller.sendMessageToRCPServer);
+router.post("/sendMessageToDeadLetter", controller.sendMessageToDeadLetter);
 
 module.exports = router;

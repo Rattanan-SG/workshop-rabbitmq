@@ -36,6 +36,7 @@ const createChannel = async () => {
       });
       channel.on("close", () => {
         logInfo("[AMQP] Channel closed");
+        channel = undefined
       });
       logInfo("[AMQP] Create channel success");
     } catch (error) {

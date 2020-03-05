@@ -25,5 +25,9 @@ module.exports = {
   sendMessageToRCPServer: asyncWrapper(async (req, res) => {
     const result = await service.sendMessageToRCPServer(req.body);
     res.send(result);
+  }),
+  sendMessageToDeadLetter: asyncWrapper(async (req, res) => {
+    const result = await service.sendMessageToDeadLetter(req.body);
+    res.send(result);
   })
 };

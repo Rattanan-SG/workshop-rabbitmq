@@ -6,8 +6,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-    # volumes:
-    # - /var/lib/rabbitmq
+    volumes:
+      - /var/lib/rabbitmq
   consumer:
     build: ./Consumer
     image: sanguo/test-consumer

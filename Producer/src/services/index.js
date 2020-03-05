@@ -4,7 +4,8 @@ const {
   fanout,
   routing,
   topic,
-  rcpClient
+  rcpClient,
+  deadLetter
 } = require("../publishes");
 
 module.exports = {
@@ -45,5 +46,13 @@ module.exports = {
       message
     });
     return { queue, message, result };
+  },
+  sendMessageToDeadLetter: async ({ exchange, routingKey, message }) => {
+    const result = await deadLetter.sendMessageToDirectExchange({
+      exchange,
+      routingKey,
+      message
+    });
+    return { exchange, routingKey, message, result };
   }
 };
