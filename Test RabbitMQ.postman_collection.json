@@ -198,6 +198,36 @@
 			"response": []
 		},
 		{
+			"name": "{{url}}:3000/api/sendMessageToDeadLetter",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"exchange\": \"work.exchange\",\n\t\"routingKey\": \"work.queue\",\n\t\"message\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}:4000/api/sendMessageToDeadLetter",
+					"host": [
+						"{{url}}"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"sendMessageToDeadLetter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "{{url}}:3000/",
 			"request": {
 				"method": "GET",
