@@ -29,14 +29,12 @@ const startSubscribe = async () => {
             msg.properties.headers["x-death"][0].count) ||
           0;
         const time = new Date().toLocaleTimeString("en-US");
-        setTimeout(() => {
-          // console.log(`[${content}] work queue Done : count ${countReject} : ${time}`);
-          // channel.ack(msg);
-          console.log(
-            `[${content}] work queue reject : count ${countReject} : ${time}`
-          );
-          channel.nack(msg, false, false);
-        }, 5000);
+        // console.log(`[${content}] work queue Done : count ${countReject} : ${time}`);
+        // channel.ack(msg);
+        console.log(
+          `[${content}] work queue reject : count ${countReject} : ${time}`
+        );
+        channel.nack(msg, false, false);
       },
       { noAck: false }
     );

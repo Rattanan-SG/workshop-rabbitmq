@@ -10,7 +10,7 @@ const queueOption = {
   durable: true,
   deadLetterExchange: "work.exchange",
   deadLetterRoutingKey: routingKey,
-  messageTtl: 1000 * 5
+  messageTtl: 10000
 };
 
 const startSubscribe = async () => {
